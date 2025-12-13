@@ -93,6 +93,9 @@ class MC4WP_MailChimp
                 if (isset($args['tags']) && is_array($args['tags'])) {
                     $this->list_add_tags_to_subscriber($list_id, $data, $args['tags']);
                 }
+                if (isset($args['remove_tags']) && is_array($args['remove_tags'])) {
+                    $this->list_remove_tags_from_subscriber($list_id, $data, $args['remove_tags']);
+                }
             } else {
                 $data                      = $api->add_new_list_member($list_id, $args);
                 $data->was_already_on_list = false;
@@ -111,11 +114,12 @@ class MC4WP_MailChimp
      *
      * @param $mailchimp_tags array existent user tags
      * @param $new_tags array new tags to add
+     * @param $status string tag status (active/inactive)
      *
      * @return array
      * @since 4.7.9
      */
-    private function merge_and_format_member_tags($mailchimp_tags, $new_tags)
+    private function merge_and_format_member_tags($mailchimp_tags, $new_tags, $status = 'active')
     {
         $mailchimp_tags = array_map(
             function ($tag) {
@@ -127,10 +131,10 @@ class MC4WP_MailChimp
         $tags = array_unique(array_merge($mailchimp_tags, $new_tags), SORT_REGULAR);
 
         return array_map(
-            function ($tag) {
+            function ($tag) use ($status) {
                 return [
                     'name'   => $tag,
-                    'status' => 'active',
+                    'status' => $status,
                 ];
             },
             $tags
@@ -158,6 +162,49 @@ class MC4WP_MailChimp
         $api  = $this->get_api();
         $data = [
             'tags' => $this->merge_and_format_member_tags($mailchimp_member->tags, $new_tags),
+        ];
+
+        try {
+            $api->update_list_member_tags($mailchimp_list_id, $mailchimp_member->email_address, $data);
+        } catch (MC4WP_API_Exception $ex) {
+            // fail silently
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Remove tags from a list member.
+     *
+     * @param $mailchimp_list_id string The list id to subscribe to
+     * @param $mailchimp_member stdClass mailchimp user informations
+     * @param $remove_tags array tags to remove from the user
+     *
+     * @return bool
+     * @throws Exception
+     * @since 4.10.10
+     */
+    private function list_remove_tags_from_subscriber($mailchimp_list_id, $mailchimp_member, array $remove_tags)
+    {
+        // do nothing if no tags given
+        if (count($remove_tags) === 0) {
+            return true;
+        }
+
+        $api = $this->get_api();
+        $tags_to_remove = array_map(
+            function ($tag) {
+                return [
+                    'name'   => $tag,
+                    'status' => 'inactive',
+                ];
+            },
+            $remove_tags
+        );
+
+        $data = [
+            'tags' => $tags_to_remove,
         ];
 
         try {

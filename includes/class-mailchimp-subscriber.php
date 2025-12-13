@@ -48,6 +48,11 @@ class MC4WP_MailChimp_Subscriber
     public $tags = [];
 
     /**
+     * @var array The tags to remove from this member.
+     */
+    public $remove_tags = [];
+
+    /**
      * @var array The marketing permissions for the subscriber.
      */
     public $marketing_permissions = [];
@@ -80,3 +85,6 @@ class MC4WP_MailChimp_Subscriber
         return $array;
     }
 }
+
+
+
