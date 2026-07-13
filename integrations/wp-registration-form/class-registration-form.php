@@ -35,7 +35,6 @@ class MC4WP_Registration_Form_Integration extends MC4WP_User_Integration
             add_action('register_form', [ $this, 'maybe_output_checkbox' ], 20);
             add_action('woocommerce_register_form', [ $this, 'maybe_output_checkbox' ], 20);
             add_action('user_new_form', [ $this, 'maybe_output_user_new_checkbox' ], 20);
-
         }
 
         add_action('um_user_register', [ $this, 'subscribe_from_registration' ], 90, 1);
@@ -87,7 +86,6 @@ public function output_user_new_checkbox()
         }
     }
 
-
     /**
      * Subscribes from WP Registration Form
      *
@@ -97,7 +95,6 @@ public function output_user_new_checkbox()
      */
     public function subscribe_from_registration($user_id)
     {
-
         // was sign-up checkbox checked?
         if (! $this->triggered()) {
             return false;
