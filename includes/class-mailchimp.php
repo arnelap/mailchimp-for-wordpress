@@ -628,7 +628,7 @@ class MC4WP_MailChimp
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function get_error_code()
     {
