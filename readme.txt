@@ -4,7 +4,7 @@ Donate link: https://www.mc4wp.com/contribute/#utm_source=wp-plugin-repo&utm_med
 Tags: mailchimp, subscribe, email, newsletter, form
 Requires at least: 5.3
 Tested up to: 7.0.2
-Stable tag: 4.14.1-dev
+Stable tag: 4.14.1
 License: GPL-3.0-or-later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 7.4
@@ -256,12 +256,5 @@ _Release date: May 26, 2026_
 - Improve accessibility of generated form fields by wrapping inputs in labels and using fieldsets for checkbox and radio fields.
 - Improve validation and sanitization of submitted form data.
 - Improve debug log safety by truncating overly long messages and improving email address obfuscation. Thanks [Jack Feldcher](https://github.com/jjf404)!
-
-
-= 4.12.5 =
-
-_Release date: May 8, 2026_
-
-- Fix fatal error on plugin activation in some cases when wp_rand() returns a value below 10 for the minute part. Thanks [Tim Carr](https://www.wpzinc.com/)!
 
 [View the full changelog on GitHub](https://github.com/ibericode/mailchimp-for-wordpress/blob/main/CHANGELOG.md)
