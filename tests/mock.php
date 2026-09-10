@@ -107,6 +107,24 @@ function esc_html($value)
     return htmlspecialchars($value);
 }
 
+/** @ignore */
+function wp_allowed_protocols()
+{
+    return ['http', 'https', 'mailto', 'tel'];
+}
+
+/** @ignore */
+function wp_kses_uri_attributes()
+{
+    return ['action', 'formaction', 'href', 'src', 'poster'];
+}
+
+/** @ignore */
+function __return_empty_string()
+{
+    return '';
+}
+
 
 /** @ignore */
 function get_post_meta($id, $meta_key = '', $single = true)

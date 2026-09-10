@@ -26,7 +26,8 @@
     "phpstan/phpstan": "^2.2.1",
     "szepeviktor/phpstan-wordpress": "^2.0.3",
     "phpstan/extension-installer": "^1.4.3",
-    "wp-coding-standards/wpcs": "^3.4"
+    "wp-coding-standards/wpcs": "^3.4",
+    "johnpbloch/wordpress-core": "6.2.*"
   },
   "scripts": {
     "make-pot": "wp i18n make-pot . languages/mailchimp-for-wp.pot --exclude=assets/js",
